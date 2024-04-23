@@ -6,8 +6,8 @@ import java.sql.DriverManager;
 public class SingleConnectionBanco {
 	
 	private static String banco = "jdbc:postgresql://localhost:5433/curso-jsp?autoReconnect=true";
-	private static String user = "";
-	private static String senha = "";
+	private static String user = "*****";
+	private static String senha = "****";
 	private static Connection connection = null;
 	
 	public static Connection getConnection() {
