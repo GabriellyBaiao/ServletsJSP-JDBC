@@ -110,9 +110,28 @@
              <span aria-hidden="true">&times;</span>
            </button>
          </div>
+         
          <div class="modal-body">
-           ...
-         </div>
+           <div class="input-group mb-3">
+ 			 <input type="text" class="form-control" placeholder="Nome" aria-label="nome" id="nomeBusca" aria-describedby="basic-addon2">
+  		 	  <div class="input-group-append">
+    		<button class="btn btn-success" type="button" onclick="buscarUsuario();">Buscar</button>
+  		</div>
+	</div>
+ </div>
+ 
+ <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Ver</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+  </tbody>
+</table>
          <div class="modal-footer">
            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
          </div>
@@ -121,6 +140,15 @@
    </div>
    
    <script type="text/javascript">
+   
+   function buscarUsuario() {
+	   
+	 var nomeBusca = document.getElementById('nomeBusca').value;
+	 
+	 if(nomeBusca != null &&  nomeBusca != '' &&  nomeBusca.trim() != '') {/*Validando que tem que ter valor para buscar no banco*/
+		 alert(nomeBusca);
+	 }
+}
    
    function criarDeleteComAjax() {
 	    
