@@ -76,14 +76,14 @@
                                                             
                                                            <button type="button" class="btn btn-primary waves-effect waves-light" onClick="limparForm();">Novo</button>
 												            <button class="btn btn-success waves-effect waves-light">Salvar</button>
-												            <button  type="button" "btn btn-info waves-effect waves-light" onclick="criarDelete();">Excluir</button>
+												            <button  type="button" class="btn btn-info waves-effect waves-light" onclick="criarDeleteComAjax();">Excluir</button>
                                                         </form> 
                                                    
                                                 </div>
                                                 </div>
                                                 </div>
                                                 </div>
-                                                <span>${msg}</span>
+                                                <span id="msg">${msg}</span>
                                                 
                                     </div>
                                     <!-- Page-body end -->
@@ -96,60 +96,49 @@
             </div>
         </div>
     </div>
-       
-    <!-- Warning Section Starts -->
-    <!-- Older IE warning message -->
-    <!--[if lt IE 10]>
-    <div class="ie-warning">
-        <h1>Warning!!</h1>
-        <p>You are using an outdated version of Internet Explorer, please upgrade <br/>to any of the following web browsers to access this website.</p>
-        <div class="iew-container">
-            <ul class="iew-download">
-                <li>
-                    <a href="http://www.google.com/chrome/">
-                        <img src="<%= request.getContextPath() %>/assets/images/browser/chrome.png" alt="Chrome">
-                        <div>Chrome</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.mozilla.org/en-US/firefox/new/">
-                        <img src="<%= request.getContextPath() %>/assets/images/browser/firefox.png" alt="Firefox">
-                        <div>Firefox</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="http://www.opera.com">
-                        <img src="<%= request.getContextPath() %>/assets/images/browser/opera.png" alt="Opera">
-                        <div>Opera</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.apple.com/safari/">
-                        <img src="<%= request.getContextPath() %>/assets/images/browser/safari.png" alt="Safari">
-                        <div>Safari</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-                        <img src="<%= request.getContextPath() %>/assets/images/browser/ie.png" alt="">
-                        <div>IE (9 & above)</div>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <p>Sorry for the inconvenience!</p>
-    </div>
-    <![endif]-->
-    <!-- Warning Section Ends -->
-    
+         
    <jsp:include page="javascriptfile.jsp"></jsp:include>
    <script type="text/javascript">
    
-   function criarDelete() {
+   
+   function criarDeleteComAjax() {
 	    
-	    document.getElementById("formUser").method = 'get';
-	    document.getElementById("acao").value = 'deletar';
-	    document.getElementById("formUser").submit();
+	    if (confirm('Deseja realmente excluir os dados?')){
+		
+		 var urlAction = document.getElementById('formUser').action;
+		 var idUser = document.getElementById('id').value;
+		 
+		 $.ajax({
+		     
+		     method: "get",
+		     url : urlAction,
+		     data : "id=" + idUser + '&acao=deletarajax',
+		     success: function (response) {
+			 
+			  limparForm();
+			  document.getElementById('msg').textContent = response;
+		     }
+		     
+		 }).fail(function(xhr, status, errorThrown){
+		    alert('Erro ao deletar usuário por id: ' + xhr.responseText);
+		 });
+		 
+		  
+	    }
+	    
+	}
+
+
+
+	function criarDelete() {
+	    
+	    if(confirm('Deseja realmente excluir os dados?')) {
+		
+		    document.getElementById("formUser").method = 'get';
+		    document.getElementById("acao").value = 'deletar';
+		    document.getElementById("formUser").submit();
+		    
+	    }
 	    
 	}
 
@@ -162,8 +151,7 @@
 		    elementos[p].value = '';
 	    }
 	}
-   </script>
-</body>
-
+		</script>
+	</body>
 </html>
     
